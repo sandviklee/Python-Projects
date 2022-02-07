@@ -1,0 +1,7 @@
+# This file is used internally by FFMPEG.
+file 'file:f:/Python Hobby/media/videos/Github/480p15/partial_movie_files/Shapes/3163782288_374588165_1793580042.mp4'
+file 'file:f:/Python Hobby/media/videos/Github/480p15/partial_movie_files/Shapes/2201830969_783623359_1793580042.mp4'
+file 'file:f:/Python Hobby/media/videos/Github/480p15/partial_movie_files/Shapes/2201830969_2097728936_3522036678.mp4'
+file 'file:f:/Python Hobby/media/videos/Github/480p15/partial_movie_files/Shapes/2201830969_1779470805_1067686389.mp4'
+file 'file:f:/Python Hobby/media/videos/Github/480p15/partial_movie_files/Shapes/2201830969_1912508544_3792124872.mp4'
+file 'file:f:/Python Hobby/media/videos/Github/480p15/partial_movie_files/Shapes/2201830969_1214219911_3446207079.mp4'
