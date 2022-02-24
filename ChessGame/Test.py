@@ -4,6 +4,7 @@ txt = open("src/chessboard.txt", "r")
 
 lst = []
 lst2 = []
+
 for text in txt:
     for word in text:
         if re.search("[a-zA-Z]", word):

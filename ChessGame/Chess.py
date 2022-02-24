@@ -19,29 +19,29 @@ class Chessboard():
             for x in rows:
                 if (re.search("[a-zA-Z]", x)):
                     if x == "p":
-                        self.nestedpieces.append(Pieces.Pawn(-1, len(self.nestedpieces), len(self.pieces)))
-                    elif x == "P":
                         self.nestedpieces.append(Pieces.Pawn(1, len(self.nestedpieces), len(self.pieces)))
+                    elif x == "P":
+                        self.nestedpieces.append(Pieces.Pawn(-1, len(self.nestedpieces), len(self.pieces)))
                     elif x == "h":
-                        self.nestedpieces.append(Pieces.Knight(-1, len(self.nestedpieces), len(self.pieces)))
-                    elif x == "H":
                         self.nestedpieces.append(Pieces.Knight(1, len(self.nestedpieces), len(self.pieces)))
+                    elif x == "H":
+                        self.nestedpieces.append(Pieces.Knight(-1, len(self.nestedpieces), len(self.pieces)))
                     elif x == "b":
-                        self.nestedpieces.append(Pieces.Bishop(-1, len(self.nestedpieces), len(self.pieces)))
-                    elif x == "B":
                         self.nestedpieces.append(Pieces.Bishop(1, len(self.nestedpieces), len(self.pieces)))
+                    elif x == "B":
+                        self.nestedpieces.append(Pieces.Bishop(-1, len(self.nestedpieces), len(self.pieces)))
                     elif x == "r":
-                        self.nestedpieces.append(Pieces.Rook(-1, len(self.nestedpieces), len(self.pieces)))
-                    elif x == "R":
                         self.nestedpieces.append(Pieces.Rook(1, len(self.nestedpieces), len(self.pieces)))
+                    elif x == "R":
+                        self.nestedpieces.append(Pieces.Rook(-1, len(self.nestedpieces), len(self.pieces)))
                     elif x == "q":
-                        self.nestedpieces.append(Pieces.Queen(-1, len(self.nestedpieces), len(self.pieces)))
-                    elif x == "Q":
                         self.nestedpieces.append(Pieces.Queen(1, len(self.nestedpieces), len(self.pieces)))
+                    elif x == "Q":
+                        self.nestedpieces.append(Pieces.Queen(-1, len(self.nestedpieces), len(self.pieces)))
                     elif x == "k":
-                        self.nestedpieces.append(Pieces.King(-1, len(self.nestedpieces), len(self.pieces)))
-                    elif x == "K":
                         self.nestedpieces.append(Pieces.King(1, len(self.nestedpieces), len(self.pieces)))
+                    elif x == "K":
+                        self.nestedpieces.append(Pieces.King(-1, len(self.nestedpieces), len(self.pieces)))
 
                 elif x == "0":
                     self.nestedpieces.append(x)
@@ -254,10 +254,10 @@ class Pieces:
       
 chessboard = Chessboard()
 print(chessboard.addPieces())
-chessboard.draw(screen)
+
 
 while True:
-
+    chessboard.draw(screen)
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
     
