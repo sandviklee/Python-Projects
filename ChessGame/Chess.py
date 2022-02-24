@@ -1,3 +1,4 @@
+from cmath import rect
 import pygame, sys, re
 
 pygame.init()
@@ -10,6 +11,7 @@ screen = pygame.display.set_mode(window_size)
 class Chessboard():
     def __init__(self) -> None:
         self.chessboard = pygame.image.load("src/Chessboard.png")
+        self.chessboard.convert()
         self.chessboardtxt = open("src/chessboard.txt", "r")
 
     def addPieces(self) -> list:
@@ -42,7 +44,6 @@ class Chessboard():
                         self.nestedpieces.append(Pieces.King(1, len(self.nestedpieces), len(self.pieces)))
                     elif x == "K":
                         self.nestedpieces.append(Pieces.King(-1, len(self.nestedpieces), len(self.pieces)))
-
                 elif x == "0":
                     self.nestedpieces.append(x)
                 elif x == "\n":
@@ -56,11 +57,10 @@ class Chessboard():
         screen.blit(self.chessboard, (0,0)) #Blits the chessboard
         for rows in self.pieces:
             for piece in rows:
-                if piece == "0":
-                    pass       
-                else:
-                    piece.draw(screen)
-                
+                if piece != "0":
+                    piece.draw(screen)      
+    
+                       
 class Pieces:
     class BasePiece:
         def __init__(self, _color: int, x: int, y: int) -> None:
@@ -101,15 +101,20 @@ class Pieces:
             self._moved = True
             self._pos = [x, y]
 
+        def getRect(self) -> pygame.Rect:
+            rect = self.piecepng.get_rect(topleft = ((self._pos[0] + 0.01)*64, self._pos[1]*64))
+            return rect
+
 
     class Pawn(BasePiece):
         def __init__(self, _color: int, x: int, y: int) -> None:
             super().__init__(_color, x, y)
             if _color == -1:
                 self.piecepng = pygame.transform.scale(pygame.image.load("src/cpb/b_pawn_png_shadow_128px.png"), (64, 64))
+                self.piecepng.convert()
             else:
                 self.piecepng = pygame.transform.scale(pygame.image.load("src/cpw/w_pawn_png_shadow_128px.png"), (64, 64))
-            
+                self.piecepng.convert()
 
         def legalMove(self, x: int, y: int) -> bool:
             if self._pos[0]-x != 0:
@@ -117,6 +122,7 @@ class Pieces:
                 
             return int((self._pos[1]-y) * self._color) in [i+1 for i in range(1 if self._moved else 2)]
 
+        
 
         def layPattern(self, x: int, y: int) -> list:
             pattern = []
@@ -126,9 +132,9 @@ class Pieces:
 
         def draw(self, screen):
             screen.blit(self.piecepng, ((self._pos[0] + 0.01)*64, self._pos[1]*64))
-
-        
-
+            self.rect = self.piecepng.get_rect(topleft = ((self._pos[0] + 0.01)*64, self._pos[1]*64))
+            pygame.draw.rect(screen, (255, 0, 0), self.rect, 1)
+            
 
     class Knight(BasePiece):
         def __init__(self, _color: int, x: int, y: int) -> None:
@@ -139,14 +145,15 @@ class Pieces:
                 self.piecepng = pygame.transform.scale(pygame.image.load("src/cpw/w_knight_png_shadow_128px.png"), (64, 64))
             
 
-
         def legalMove(self, x: int, y: int) -> bool:
             return sorted([abs(self._pos[0]-x), abs(self._pos[1]-y)]) == [1, 2]
 
 
         def draw(self, screen):
             screen.blit(self.piecepng, ((self._pos[0] + 0.01)*64, self._pos[1]*64))
-
+            self.rect = self.piecepng.get_rect(topleft = ((self._pos[0] + 0.01)*64, self._pos[1]*64))
+            pygame.draw.rect(screen, (255, 0, 0), self.rect, 1)
+            
         
     class Bishop(BasePiece):
         def __init__(self, _color: int, x: int, y: int) -> None:
@@ -156,7 +163,6 @@ class Pieces:
             else:
                 self.piecepng = pygame.transform.scale(pygame.image.load("src/cpw/w_bishop_png_shadow_128px.png"), (64, 64))
             
-
 
         def legalMove(self, x: int, y: int) -> bool:
             return abs(self._pos[0]-x) == abs(self._pos[1]-y)
@@ -178,7 +184,9 @@ class Pieces:
 
         def draw(self, screen):
             screen.blit(self.piecepng, ((self._pos[0] + 0.01)*64, self._pos[1]*64))
-
+            self.rect = self.piecepng.get_rect(topleft = ((self._pos[0] + 0.01)*64, self._pos[1]*64))
+            pygame.draw.rect(screen, (255, 0, 0), self.rect, 1)
+            
 
     class Rook(BasePiece):
         def __init__(self, _color: int, x: int, y: int) -> None:
@@ -209,7 +217,9 @@ class Pieces:
 
         def draw(self, screen):
             screen.blit(self.piecepng, ((self._pos[0] + 0.01)*64, self._pos[1]*64))
-
+            self.rect = self.piecepng.get_rect(topleft = ((self._pos[0] + 0.01)*64, self._pos[1]*64))
+            pygame.draw.rect(screen, (255, 0, 0), self.rect, 1)
+            
         
     class Queen(BasePiece):
         def __init__(self, _color: int, x: int, y: int) -> None:
@@ -234,6 +244,9 @@ class Pieces:
 
         def draw(self, screen):
             screen.blit(self.piecepng, ((self._pos[0] + 0.01)*64, self._pos[1]*64))
+            self.rect = self.piecepng.get_rect(topleft = ((self._pos[0] + 0.01)*64, self._pos[1]*64))
+            pygame.draw.rect(screen, (255, 0, 0), self.rect, 1)
+            
 
     class King(BasePiece):
         def __init__(self, _color: int, x: int, y: int) -> None:
@@ -250,17 +263,27 @@ class Pieces:
 
         def draw(self, screen):
             screen.blit(self.piecepng, ((self._pos[0] + 0.01)*64, self._pos[1]*64))
-
+            self.rect = self.piecepng.get_rect(topleft = ((self._pos[0] + 0.01)*64, self._pos[1]*64))
+            pygame.draw.rect(screen, (255, 0, 0), self.rect, 1)
+            
       
+
+
 chessboard = Chessboard()
 print(chessboard.addPieces())
-
-
 while True:
     chessboard.draw(screen)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT: sys.exit()
+
+    mousepos = pygame.mouse.get_pos()
+    rect = (chessboard.pieces[1][1]).getRect()
     
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: 
+            sys.exit()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if rect.collidepoint(event.pos):
+                print("Hei")
+
     pygame.display.update()
 
 
