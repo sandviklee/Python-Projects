@@ -44,6 +44,11 @@ class Piece:
             rect = self.piecepng.get_rect(topleft = ((self._pos[0] + 0.01)*64, self._pos[1]*64))
             return rect
 
+        def draw(self, screen):
+            self.rect = self.piecepng.get_rect(topleft = ((self._pos[0] + 0.01)*64, self._pos[1]*64))
+            pygame.draw.rect(screen, (255, 0, 0), self.rect, 1)        
+
+
     class NullPiece(BasePiece):
         def __init__(self, _color: int, x: int, y: int) -> None:
             super().__init__(_color, x, y)
